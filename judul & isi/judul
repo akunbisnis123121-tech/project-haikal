@@ -1,1 +1,4 @@
-
+Topologi Jaringan Segitiga 3 Router dengan VLAN dan Cloud
+Di gambar ini ada simulasi jaringan (biasanya di GNS3 atau EVE-NG) yang isinya 3 router (R-11, R-12, R-13) nyambung membentuk segitiga,
+1 Cloud3 buat jalur ke luar/internet, dan 9 PC virtual (VPCS) yang dibagi ke VLAN 10, VLAN 20, dan VLAN 30.
+Semua lampu indikatornya warna hijau, artinya semua jalur udah nyala dan nyambung.
