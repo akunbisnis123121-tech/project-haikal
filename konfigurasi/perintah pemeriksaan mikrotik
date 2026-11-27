@@ -1,1 +1,7 @@
+Perintah pemeriksaan MikroTik
 
+ip address print
+ip route print
+routing ospf neighbor print
+routing ospf interface print
+ping 192.168.10.10
