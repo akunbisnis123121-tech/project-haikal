@@ -1,1 +1,39 @@
+RINCIAN KONEKSI YANG TERHUBUNG
+
+R-12 (Router Atas) • ether1 ➔ R-11 (ether1) Jadi jembatan utama ke jaringan luar (Cloud3) sekaligus pegang 3 PC 😜
+• ether2 ➔ R-13 (ether2)
+• ether3 ➔ PC VLAN20 (e0)
+• ether4 ➔ PC VLAN10 (e0)
+• ether5 ➔ Cloud3 (eth0)
+• ether6 ➔ PC VLAN30 (e0)
+
+R-11 (Router Kiri Bawah) • ether1 ➔ R-12 (ether1) Nyambung ke dua router lain plus 3 PC di bawah 😉
+• ether2 ➔ R-13 (ether1)
+• ether3 ➔ PC VLANN10 (e0)
+• ether3 ➔ PC VLANN10 (e0)
+• ether5 ➔ PC VLLAN20 (e0)
+
+R-13 (Router Kanan Bawah) • ether1 ➔ R-11 (ether2) Nyambung ke dua router lain plus 3 PC di bawah 😊
+• ether2 ➔ R-12 (ether2)
+• ether3 ➔ PC VLANNN30 (e0)
+• ether4 ➔ PC VLANNN10 (e0)
+• ether5 ➔ PC VLAAN20 (e0)
+Cloud3	• eth0 ➔ R-12 (ether5)	
+Jalur keluar ke jaringan eksternal/internet 😒
+
+Pembagian Kelompok PC (VPCS)
+Kelompok VLAN 10
+VLAN10 (nyolok ke R-12 ether4)
+VLANN10 (nyolok ke R-11 ether3)
+VLANNN10 (nyolok ke R-13 ether4)
+
+Kelompok VLAN 20
+VLAN20 (nyolok ke R-12 ether3)
+VLLAN20 (nyolok ke R-11 ether5)
+VLAAN20 (nyolok ke R-13 ether5)
+
+Kelompok VLAN 30
+VLAN30 (nyolok ke R-12 ether6)
+VLAN30 (nyolok ke R-11 ether4)
+VLANNN30 (nyolok ke R-13 ether3)
 
