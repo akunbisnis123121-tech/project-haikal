@@ -1,17 +1,38 @@
-/system identity
-set name=R12
+# Ganti nama router biar nggak ketuker pas buka banyak terminal 😇
+system identity set name=R-12
 
-/ip address
-add address=10.0.12.1/30 interface=ether1
-add address=10.0.23.1/30 interface=ether2
-add address=192.168.10.1/24 interface=ether4
+# Minta IP otomatis dari Cloud3 lewat ether5 😋
+ip dhcp-client add interface=ether5 disabled=no
 
-/routing ospf instance
-add name=ospf-v2 version=2 router-id=1.1.1.12
+# Pasang IP point-to-point ke R-11 dan R-13 😋
+ip address
+add address=10.12.11.1/30 interface=ether1
+add address=10.12.13.1/30 interface=ether2
 
-/routing ospf area
-add name=backbone area-id=0.0.0.0 instance=ospf-v2
+# Bikin interface VLAN 10, 20, 30 sesuai port di gambar 😚
+interface vlan
+add name=vlan10-r12 vlan-id=10 interface=ether4
+add name=vlan20-r12 vlan-id=20 interface=ether3
+add name=vlan30-r12 vlan-id=30 interface=ether6
 
-/routing ospf interface-template
-add area=backbone networks=10.0.12.0/30
-add area=backbone networks=10.0.23.0/30
+# Pasang IP gateway di tiap interface VLAN 😮
+ip address
+add address=172.16.12.1/24 interface=vlan10-r12
+add address=172.16.22.1/24 interface=vlan20-r12
+add address=172.16.32.1/24 interface=vlan30-r12
+
+# Aktifin NAT masquerade biar PC bisa tembus ke Cloud3 pakai IP ether5 😶
+ip firewall nat add chain=srcnat out-interface=ether5 action=masquerade
+
+# Nyalain OSPF dan daftarin semua network biar diiklanin ke router lain 😪
+routing ospf instance add name=default router-id=1.1.1.2
+routing ospf area add name=backbone instance=default area-id=0.0.0.0
+routing ospf network
+add network=10.12.11.0/30 area=backbone
+add network=10.12.13.0/30 area=backbone
+add network=172.16.12.0/24 area=backbone
+add network=172.16.22.0/24 area=backbone
+add network=172.16.32.0/24 area=backbone
+
+# Kasih tahu R-11 dan R-13 jalur keluar (default route) lewat R-12 😏
+routing ospf instance set default originate-default=if-installed
