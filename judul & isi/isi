@@ -17,7 +17,7 @@ Kabel R-12 (ether5) ke Cloud3 (eth0): Jalur keluar ke jaringan luar/cloud. Di R-
 Kabel ke VPCS (VLAN10, VLAN20, VLAN30): Tiap router dikasih blok /24 sendiri (172.16.1x.0/24 buat VLAN 10,
 172.16.2x.0/24 buat VLAN 20, 172.16.3x.0/24 buat VLAN 30) biar nggak bentrok antar-router. 😮
 
-Penjelasan Tiap Bagian Konfigurasi
+Penjelasan Tiap Bagian Konfigurasi 😚
 •system identity: Buat ngasih nama router (R-12, R-11, R-13) biar pas buka
 banyak jendela terminal nggak ketuker mana router atas, kiri, atau kanan 🤓
 •interface vlan: Buat bikin jalur VLAN di port yang nyambung ke VPCS sesuai gambar
@@ -26,6 +26,12 @@ Jadi walaupun port fisiknya beda-beda di tiap router, ID VLAN-nya tetap konsiste
 •ip firewall nat (masquerade di R-12): Biar PC-PC di bawah bisa ikutan nyambung ke Cloud3 pakai IP ether5 milik R-12 😮
 •routing ospf: Buat nyalain protokol OSPF dan ngedaftarin semua subnet yang mau disebarin ke router tetangga. Khusus di R-12, kita tambahin
 originate-default=if-installed biar jalur keluar ke Cloud3 ikutan diinfoin ke R-11 dan R-13 😑
+
+Penjelasan Cara Ngeceknya 🤗
+•Isi IP di VPCS: Ketik ip <IP_VPCS>/24 <GATEWAY> lalu save biar setelannya nggak hilang pas di-restart
+•Cek tetangga OSPF: Ketik /routing ospf neighbor print di router. Kalau statusnya udah Full, berarti router udah saling kenal dan tukeran rute
+•Cek tabel rute: Ketik ip route print dan pastiin IP jaringan dari router lain muncul dengan kode
+•Tes ping: Coba ping dari VPCS satu router ke VPCS router lain. Kalau muncul reply, berarti konfigurasinya udah jalan lancar 🤩
 
 
 
