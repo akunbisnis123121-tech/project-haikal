@@ -1,16 +1,29 @@
-system identity
-set name=R11 😙
+# Kasih identitas R-11 😍
+system identity set name=R-11
 
+# Pasang IP link ke R-12 (ether1) dan R-13 (ether2) 😋
 ip address
-add address=10.0.12.2/30 interface=ether1
-add address=10.0.13.1/30 interface=ether2 😱
+add address=10.12.11.2/30 interface=ether1
+add address=10.11.13.1/30 interface=ether2
 
-routing ospf instance
-add name=ospf-v2 version=2 router-id=1.1.1.11 🥵
+# Bikin VLAN di port bawah R-11 (ether3=VLAN10, ether5=VLAN20, ether4=VLAN30) 😙
+interface vlan
+add name=vlan10-r11 vlan-id=10 interface=ether3
+add name=vlan20-r11 vlan-id=20 interface=ether5
+add name=vlan30-r11 vlan-id=30 interface=ether4
 
-routing ospf area
-add name=backbone area-id=0.0.0.0 instance=ospf-v2 🤤
+# Pasang IP gateway tiap VLAN di R-11 😶
+ip address
+add address=172.16.11.1/24 interface=vlan10-r11
+add address=172.16.21.1/24 interface=vlan20-r11
+add address=172.16.31.1/24 interface=vlan30-r11
 
-routing ospf interface-template
-add area=backbone networks=10.0.12.0/30
-add area=backbone networks=10.0.13.0/30 😒
+# Aktifin OSPF di R-11 biar nyambung ke R-12 dan R-13 😒
+routing ospf instance add name=default router-id=1.1.1.1
+routing ospf area add name=backbone instance=default area-id=0.0.0.0
+routing ospf network
+add network=10.12.11.0/30 area=backbone
+add network=10.11.13.0/30 area=backbone
+add network=172.16.11.0/24 area=backbone
+add network=172.16.21.0/24 area=backbone
+add network=172.16.31.0/24 area=backbone
